@@ -45,24 +45,24 @@ public:
 	node toAdd is equal to a new node with data
 
 	if root is equal to nullptr
-	root is equal to toAdd
+		root is equal to toAdd
 	else
-	bool added is false
-	do while added is false
-	if curr is equal to nullptr
-	if data is less than parent's data
-	parent's left is equal to toAdd
-	else
-	parent's right is equal to toAdd
-	added is equal to true
-	else if data is less than curr's data
-	parent is equal to curr
-	curr is equal to curr's left
-	else
-	parent is equal to curr
-	curr is equal to curr's right
+		bool added is false
+		do while added is false
+			if curr is equal to nullptr
+				if data is less than parent's data
+					parent's left is equal to toAdd
+				else
+					parent's right is equal to toAdd
+				added is equal to true
+			else if data is less than curr's data
+				parent is equal to curr
+				curr is equal to curr's left
+			else
+				parent is equal to curr
+				curr is equal to curr's right
 	*/
-	void add(T data) {
+	void add(T data){
 		BSTNode<T>* curr = root;
 		BSTNode<T>* parent = root;
 		BSTNode<T>* toAdd = new BSTNode<T>(data);
@@ -106,10 +106,10 @@ public:
 	/*
 	num is equal to 1
 	if node has a left
-	num plus count of node's left
+		num plus count of node's left
 	end if
 	if node has a right
-	num plus count of node's right
+		num plus count of node's right
 	end if
 	return num
 	*/
@@ -133,13 +133,13 @@ public:
 	node curr is equal to root
 
 	do while curr is not equal to nullptr
-	if data is equal to curr's data
-	return true
-	else if data is less than curr's data
-	curr is equal to curr's left
-	else if data is greater than curr's data
-	curr is equal to curr's right
-	end if
+		if data is equal to curr's data
+			return true
+		else if data is less than curr's data
+			curr is equal to curr's left
+		else if data is greater than curr's data
+			curr is equal to curr's right
+		end if
 	end loop
 	return false
 
@@ -160,6 +160,73 @@ public:
 		return false;
 	}
 
+	//whereIs
+	//whereIs returns the position of a data member in order relative to the staring node
+	/*
+	whereIs
+
+	if the node has the data
+		at equals 1
+		incrementInorder of the node, pointer at and the data
+		return at
+	end if
+
+	return 0;
+
+
+	incrementInorder
+	found equals false
+
+	if node has a left
+		found equals incrementInorder of node's left, at and data
+
+		if found equals true
+			return found
+		end if
+
+		at plus 1
+	end if
+
+	if data is equal to node's data
+		return true
+	end if
+
+	if node has a right
+		at plus 1
+		found equals incrementInorder of node'sright, at and data
+	end if
+
+	return found
+	*/
+	int whereIs(T data) {
+		return whereIs(root, data);
+	}
+	int whereIs(BSTNode<T>* node, T data) {
+		if (has(data)) {
+			int at = 1;
+			incrementInorder(node, &at, data);
+			return at;
+		}
+		return 0;
+	}
+	bool incrementInorder(BSTNode<T>* node, int* at, T data) {
+		bool found = false;
+		if (node->hasLeft()) {
+			found = incrementInorder(node->getLeft(), at, data);
+			if (found) {
+				return found;
+			}
+			*at += 1;
+		}
+		if (data == node->getData()) {
+			return true;
+		}
+		if (node->hasRight()) {
+			*at += 1;
+			found = incrementInorder(node->getRight(), at, data);
+		}
+		return found;
+	}
 
 	//Find
 	/*
@@ -167,9 +234,9 @@ public:
 	node curr is equal to node
 	small is equal to curr's data
 
-	while curr's left is not a nullptr
-	small is equal to curr's data
-	curr is equal to curr's left
+	while curr has left
+		small is equal to curr's data
+		curr is equal to curr's left
 	end loop
 
 	return small
@@ -185,10 +252,10 @@ public:
 		do {
 			curr = curr->getLeft();
 			small = curr->getData();
-		} while (curr->getLeft() != nullptr);
+		} while (curr->hasLeft());
 		return small;
 	}
-
+	
 	T findLargest() {
 		return findLargest(root);
 	}
@@ -198,7 +265,7 @@ public:
 		do {
 			curr = curr->getRight();
 			large = curr->getData();
-		} while (curr->getRight() != nullptr);
+		} while (curr->hasRight());
 		return large;
 	}
 
@@ -210,7 +277,7 @@ public:
 	at is equal to 1
 
 	if position is less than or equal to num
-	return findInorder of node, at, and position
+		return findInorder of node, at, and position
 	end if
 
 	return NULL
@@ -220,21 +287,21 @@ public:
 	data is equal to NULL
 
 	if node has left
-	data is equal to findInorder of node's left, at and posistion
+		data is equal to findInorder of node's left, at and posistion
 
-	if data is not equal to NULL
-	return data
-	end if
-	pointer at plus 1
+		if data is not equal to NULL
+			return data
+		end if
+		pointer at plus 1
 	end if
 
 	if at is equal to position
-	return node's data
+		return node's data
 	end if
 
 	if node has right
-	pointer at plus 1
-	data is equal to findInorder of node's right, at. and position
+		pointer at plus 1
+		data is equal to findInorder of node's right, at. and position
 	end if
 
 	return data
@@ -298,7 +365,7 @@ public:
 		return data;
 	}
 
-	T removeAt(int pos) {
+	T removeAt(int pos){
 		return removeAt(root, pos);
 	}
 	T removeAt(BSTNode<T>* node, int pos) {
@@ -313,15 +380,15 @@ public:
 	node curr is equal to node
 	node parent is equal to node's parent
 
-	while curr's left is not equal to nullptr
-	parent is equal to curr
-	curr is equal to curr's left
+	while curr has left
+		parent is equal to curr
+		curr is equal to curr's left
 	end loop
 
 	if parent's data is less than or equal to curr's data
-	parent's right is equal to curr's right
+		parent's right is equal to curr's right
 	else
-	parent's left is equal to curr's right
+		parent's left is equal to curr's right
 	end if
 
 	curr's right is equal to nullptr
@@ -332,7 +399,7 @@ public:
 	BSTNode<T>* pluckSmallest(BSTNode<T>* par, BSTNode<T>* node) {
 		BSTNode<T>* curr = node;
 		BSTNode<T>* parent = par;
-		while (curr->getLeft() != nullptr) {
+		while (curr->hasLeft()) {
 			parent = curr;
 			curr = curr->getLeft();
 		}
@@ -348,7 +415,7 @@ public:
 	BSTNode<T>* pluckLargest(BSTNode<T>* par, BSTNode<T>* node) {
 		BSTNode<T>* curr = node;
 		BSTNode<T>* parent = par;
-		while (curr->getRight() != nullptr) {
+		while (curr->hasRight()) {
 			parent = curr;
 			curr = curr->getRight();
 		}
@@ -370,15 +437,23 @@ public:
 	node curr is equal to node
 	node parent is equal to node
 
-	while curr's left is not equal to nullptr
-	parent is equal to curr
-	curr is euqla to curr's left
+	while curr has left
+		parent is equal to curr
+		curr is euqla to curr's left
 	end loop
 
-	if curr's right is not equal to nullptr
-	parent's left is set to curr's right
+	if curr is equal to root
+		if root has right
+			root is equal to root's right
+		else
+			root is equal to nullptr
+		end if
 	else
-	parent's left is set to nullptr
+		if curr has right
+			parent's left is set to curr's right
+		else
+			parent's left is set to nullptr
+		end if
 	end if
 
 	delete curr
@@ -392,12 +467,12 @@ public:
 	void deleteSmallest(BSTNode<T>* node) {
 		BSTNode<T>* curr = node;
 		BSTNode<T>* parent = node;
-		while (curr->getLeft() != nullptr) {
+		while (curr->hasLeft()) {
 			parent = curr;
 			curr = curr->getLeft();
 		}
 		if (curr == root) {
-			if (root->getRight() != nullptr) {
+			if (root->hasRight()) {
 				root = root->getRight();
 			}
 			else {
@@ -405,7 +480,7 @@ public:
 			}
 		}
 		else {
-			if (curr->getRight() != nullptr) {
+			if (curr->hasRight()) {
 				parent->setLeft(curr->getRight());
 			}
 			else {
@@ -420,12 +495,12 @@ public:
 	void deleteLargest(BSTNode<T>* node) {
 		BSTNode<T>* curr = node;
 		BSTNode<T>* parent = node;
-		while (curr->getRight() != nullptr) {
+		while (curr->hasRight()) {
 			parent = curr;
 			curr = curr->getRight();
 		}
 		if (curr == root) {
-			if (root->getLeft() != nullptr) {
+			if (root->hasLeft()) {
 				root = root->getLeft();
 			}
 			else {
@@ -433,7 +508,7 @@ public:
 			}
 		}
 		else {
-			if (curr->getLeft() != nullptr) {
+			if (curr->hasLeft()) {
 				parent->setRight(curr->getLeft());
 			}
 			else {
@@ -442,68 +517,68 @@ public:
 		}
 		delete curr;
 	}
-
+	
 	//DeleteData
 	/*
 	if start has the data
-	node curr is equal to start
-	node parent is equal to start
-	bool found is false
+		node curr is equal to start
+		node parent is equal to start
+		bool found is false
 
-	do while not found
-	if data is equal to curr's data
-	found is equal to true
-	else if data is less than curr's data
-	parent is equal to curr
-	curr is equal to curr's left
-	else
-	parent is equal to curr
-	curr is equal to curr's right
-	end if
-	end loop
+		do while not found
+			if data is equal to curr's data
+				found is equal to true
+			else if data is less than curr's data
+				parent is equal to curr
+				curr is equal to curr's left
+			else
+				parent is equal to curr
+				curr is equal to curr's right
+			end if
+		end loop
 
-	if data is equal to root's data
-	if root's right is not equal to nullptr
-	root's data is equal to findSmallest of root's right
-	deleteSmallest of root's right
-	else if root's right is not equal to nullptr
-	root's data is equal to findLargest of root's left
-	deleteLargest fo root's left
-	else if root does not have children
-	root is equal to nullptr
-	end if
-	else
-	if curr's right is not equal to nullptr
-	node is equal to pluckSmallest of curr's right
-	node's right is equal to curr's right
-	node's left is equal to curr's left
+		if data is equal to root's data
+			if root has right
+				root's data is equal to findSmallest of root's right
+				deleteSmallest of root's right
+			else if root has left
+				root's data is equal to findLargest of root's left
+				deleteLargest fo root's left
+			else if root is a leaf
+				root is equal to nullptr
+			end if
+		else
+			if curr has right
+				node is equal to pluckSmallest of curr's right
+				node's right is equal to curr's right
+				node's left is equal to curr's left
 
-	if parent's data is less than curr's data
-	parent's right is equal to node
-	else
-	parent's left is equal to node
-	end if
-	else if curr's left is not equal to nullptr
-	node is equal to pluckLargest of curr's left
-	node's left is equal to curr's left
-	node's right is equal to curr's right
+				if parent's data is less than curr's data
+					parent's right is equal to node
+				else
+					parent's left is equal to node
+				end if
+			else if curr has left
+				node is equal to pluckLargest of curr's left
+				node's left is equal to curr's left
+				node's right is equal to curr's right
 
-	if parent's data is less than curr's data
-	parent's right is equal to node
-	else
-	parent's left is equal to node
-	end if
-	else if curr does not have children
-	if parent's data is less than curr's data
-	parent's right is equal to nullptr
-	else
-	parent;s left is equal to nullptr
-	end if
-	end if
+				if parent's data is less than curr's data
+					parent's right is equal to node
+				else
+					parent's left is equal to node
+				end if
+			else if curr is a leaf
+				if parent's data is less than curr's data
+					parent's right is equal to nullptr
+				else
+					parent's left is equal to nullptr
+				end if
+			end if
 
-	delete curr
-	end if
-	end if
+			delete curr
+		end if
+	end if		
 	*/
 	void deleteData(T data) {
 		deleteData(root, data);
@@ -528,13 +603,13 @@ public:
 			} while (!found);
 
 			if (data == root->getData()) {
-				if (root->getRight() != nullptr) {
-					BSTNode<T>* node = pluckSmallest(curr, curr->getRight());
+				if (root->hasRight()) {
+					BSTNode<T>* node = pluckSmallest(curr,curr->getRight());
 					node->setRight(curr->getRight());
 					node->setLeft(curr->getLeft());
 					root = node;
 				}
-				else if (root->getLeft() != nullptr) {
+				else if (root->hasLeft()) {
 					BSTNode<T>* node = pluckLargest(curr, curr->getLeft());
 					node->setLeft(curr->getLeft());
 					node->setRight(curr->getRight());
@@ -545,7 +620,7 @@ public:
 				}
 			}
 			else {
-				if (curr->getRight() != nullptr) {
+				if (curr->hasRight()) {
 					BSTNode<T>* node = pluckSmallest(curr, curr->getRight());
 					node->setRight(curr->getRight());
 					node->setLeft(curr->getLeft());
@@ -556,7 +631,7 @@ public:
 						parent->setLeft(node);
 					}
 				}
-				else if (curr->getLeft() != nullptr) {
+				else if (curr->hasLeft()) {
 					BSTNode<T>* node = pluckLargest(curr, curr->getLeft());
 					node->setLeft(curr->getLeft());
 					node->setRight(curr->getRight());
@@ -567,7 +642,7 @@ public:
 						parent->setLeft(node);
 					}
 				}
-				else if (!(curr->hasChildren())) {
+				else if (curr->isLeaf()) {
 					if (parent->getData() < curr->getData()) {
 						parent->setRight(nullptr);
 					}
@@ -593,74 +668,74 @@ public:
 	//DeleteTree
 	/*
 	deletePostorder
-	if node's left is not equal to nullptr
-	deletePostorder of node's left
-	end if
+		if node has left
+			deletePostorder of node's left
+		end if
 
-	if node's right is not equal to nullptr
-	deletePostorder of node's right
-	end if
-	delete node
+		if node has right
+			deletePostorder of node's right
+		end if
+		delete node
 	*/
 	void deleteTree() {
 		deletePostorder(root);
 	}
 	void deletePostorder(BSTNode<T>* node) {
-		if (node->getLeft() != nullptr) {
+		if (node->hasLeft()) {
 			deletePostorder(node->getLeft());
 		}
-		if (node->getRight() != nullptr) {
+		if (node->hasRight()) {
 			deletePostorder(node->getRight());
 		}
 		delete node;
 	}
-
+	
 
 	//Print
 	void print() {
 		printInorder(root);//calls inorder print
 	}
-
+	
 	//printInorder
 	/*
-	if node's left is not equal to nullptr
-	printInorder of node's left
+	if node has left
+		printInorder of node's left
 	end if
 
 	print node's data
 	next line
 
-	if node's right is not equal to nullptr
-	printInorder of node's right
+	if node has right
+		printInorder of node's right
 	end if
 	*/
 	void printInorder(BSTNode<T>* node) {
-		if (node->getLeft() != nullptr) {
+		if (node->hasLeft()) {
 			printInorder(node->getLeft());
 		}
 		node->printData();
 		cout << endl;
 
-		if (node->getRight() != nullptr) {
+		if (node->hasRight()) {
 			printInorder(node->getRight());
 		}
 	}
-
+	
 	//printIndented
 	/*
 	for i is 0; i is less than tab; i++
-	print an indent
+		print an indent
 	end loop
 
 	print node data
 	next line
 
-	if node's left is not equal to nullptr
-	printPreorder of node's left, adding 1 to tab
+	if node has left
+		printPreorder of node's left, adding 1 to tab
 	end if
 
-	if node's right is not equal to nullptr
-	printPreorder of node's right, adding 1 to tab
+	if node has right
+		printPreorder of node's right, adding 1 to tab
 	end if
 	*/
 	void printIndented() {
@@ -672,12 +747,79 @@ public:
 		}
 		node->printData();
 		cout << endl;
-		if (node->getLeft() != nullptr) {
+		if (node->hasLeft()) {
 			printPreorder(node->getLeft(), tab + 1);
 		}
-		if (node->getRight() != nullptr) {
+		if (node->hasRight()) {
 			printPreorder(node->getRight(), tab + 1);
 		}
+	}
+	
+	//printAt
+	//prints the data of the node at the specified inorder position relative to the starting node
+	/*
+	printAt
+
+	num equals count of the node
+	at equals 1
+	if pos is less than or equal to num
+		printSearch of node, pos and pointer at
+	end if
+
+
+	printSearch
+
+	printed equals false
+	if node has left
+		printed equals printSearch of node's left, pos and at
+
+		if printed equals true
+			return printed
+		end if
+
+		at plus 1
+	end if
+
+	if at is equal to pos
+		print node's data
+		return true
+	end if
+
+	if node has right
+		at plus 1
+		printed equals printSearch of node's right, pos and at
+	end if
+
+	return printed
+	*/
+	void printAt(int pos) {
+		printAt(root, pos);
+	}
+	void printAt(BSTNode<T>* node, int pos) {
+		int num = count(node);
+		int at = 1;
+		if (pos <= num) {
+			printSearch(node, pos, &at);
+		}
+	}
+	bool printSearch(BSTNode<T>* node, int pos, int* at) {
+		bool printed = false;
+		if (node->hasLeft()) {
+			printed = printSearch(node->getLeft(), pos, at);
+			if (printed) {
+				return printed;
+			}
+			*at += 1;
+		}
+		if (*at == pos) {
+			node->printData();
+			return true;
+		}
+		if (node->hasRight()) {
+			*at += 1;
+			printed = printSearch(node->getRight(), pos, at);
+		}
+		return printed;
 	}
 };
 #endif

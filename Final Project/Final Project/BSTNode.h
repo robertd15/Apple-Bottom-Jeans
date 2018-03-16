@@ -28,7 +28,7 @@ public:
 		left = l;
 		right = r;
 	}
-
+	
 	//getters and setters
 	T getData() {
 		return data;
