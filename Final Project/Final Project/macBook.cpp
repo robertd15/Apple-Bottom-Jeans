@@ -12,7 +12,7 @@ macBook::macBook()
 	orderNum = "";
 	name = "";
 	releaseDate = "";
-	price = 0;
+	price = 0.0;
 	quantity = 0;
 }
 
@@ -60,6 +60,10 @@ void macBook::setQuantity(int quan)
 	quantity = quan;
 }
 
+void macBook::setNext(macBook* sNext)
+{
+	nextMac = sNext;
+}
 
 //Getters
 std::string macBook::getOrderNum() const
@@ -87,6 +91,75 @@ int macBook::getQuantity() const
 	return quantity;
 }
 
+macBook* macBook::getNext() const
+{
+	return nextMac;
+}
+
+//Overloaded comparison operators
+bool macBook::operator < (const macBook &right)
+{
+	bool lessthan;
+
+	if (orderNum < right.orderNum || name < right.name || releaseDate < right.releaseDate || price < right.price || quantity < right.quantity)
+		lessthan = true;
+	else
+		lessthan = false;
+	return lessthan;
+}
+
+bool macBook::operator > (const macBook &right)
+{
+	bool greaterthan;
+
+	if (orderNum > right.orderNum || name > right.name || releaseDate > right.releaseDate || price > right.price || quantity > right.quantity)
+		greaterthan = true;
+	else
+		greaterthan = false;
+
+	return greaterthan;
+}
+
+bool macBook::operator <= (const macBook &right)
+{
+	bool lessthanequal;
+
+	if (*this < right || *this == right)
+		lessthanequal = true;
+	else
+		lessthanequal = false;
+
+	return lessthanequal;
+}
+
+bool macBook::operator >= (const macBook &right)
+{
+	bool greaterthanequal;
+
+	if (*this > right || *this == right)
+		greaterthanequal = true;
+	else
+		greaterthanequal = false;
+
+	return greaterthanequal;
+}
+
+//Overloaded equality operators
+bool macBook::operator == (const macBook &right)
+{
+	if (orderNum == right.orderNum && name == right.name && releaseDate == right.releaseDate && price == right.price)
+		return true;
+	else
+		return false;
+}
+
+bool macBook::operator != (const macBook &right)
+{
+	if (*this == right)
+		return false;
+	else
+		return true;
+}
 
 //Overloaded input/output operators feel free to change these
 std::ostream &operator << (std::ostream &strm, const macBook &obj)

@@ -23,6 +23,7 @@ private:
 public:
 	fileIO();
 	~fileIO();
+
 	//creates an array of book objects reading from a file
 	int readFile(macBook[]);
 	//creates an output file of books in the inventory/can reuse same txt file

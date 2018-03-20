@@ -1,10 +1,11 @@
 /*templated binary search tree node
 Frankie Ranallo
 */
+
+#pragma once
+
 #include <iostream>
 
-#ifndef BSTNode_h
-#define BSTNode_h
 template<class T>
 class BSTNode {
 private:
@@ -28,7 +29,7 @@ public:
 		left = l;
 		right = r;
 	}
-	
+
 	//getters and setters
 	T getData() {
 		return data;
@@ -100,5 +101,3 @@ public:
 		cout << endl;
 	}
 };
-
-#endif

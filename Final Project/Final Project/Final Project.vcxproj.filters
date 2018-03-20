@@ -30,12 +30,27 @@
     <ClInclude Include="fileIO.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="hashi.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="macHash.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="macBook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="fileIO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Final Project.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hashi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="macHash.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

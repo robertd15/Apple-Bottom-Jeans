@@ -114,12 +114,17 @@
     <ClInclude Include="BST.h" />
     <ClInclude Include="BSTNode.h" />
     <ClInclude Include="fileIO.h" />
+    <ClInclude Include="hashi.h" />
     <ClInclude Include="HashMap.h" />
     <ClInclude Include="macBook.h" />
+    <ClInclude Include="macHash.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="fileIO.cpp" />
+    <ClCompile Include="Final Project.cpp" />
+    <ClCompile Include="hashi.cpp" />
     <ClCompile Include="macBook.cpp" />
+    <ClCompile Include="macHash.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

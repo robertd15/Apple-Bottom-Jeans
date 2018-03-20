@@ -1,5 +1,6 @@
 //Charles Canasa
-
+#include "BST.h"
+#include "macHash.h"
 #include "fileIO.h"
 
 fileIO::fileIO()
@@ -34,32 +35,29 @@ int fileIO::readFile(macBook catalog[])	//opens file of apple data and inserts i
 	while (inputFile)
 	{
 		//Inserts each line into corresponding object attribute
+		getline(inputFile, orderNum);
+		catalog[count].setOrderNum(orderNum);
 
-		for (int i = 0; i <= count - done; i++)
+		getline(inputFile, name);
+		catalog[count].setName(name);
+
+		getline(inputFile, releaseDate);
+		catalog[count].setReleaseDate(releaseDate);
+
+		inputFile >> price;
+		inputFile.ignore();
+		catalog[count].setPrice(price);
+
+		inputFile >> quantity;
+		inputFile.ignore();
+		catalog[count].setQuantity(quantity);
+
+		count++;
+
+	/*	if (inputFile.eof())
 		{
-			getline(inputFile, orderNum);
-			catalog[i].setOrderNum(orderNum);
-
-			getline(inputFile, name);
-			catalog[i].setName(name);
-
-			getline(inputFile, releaseDate);
-			catalog[i].setReleaseDate(releaseDate);
-
-			inputFile >> price;
-			inputFile.ignore();
-			catalog[i].setPrice(price);
-
-			inputFile >> quantity;
-			inputFile.ignore();
-			catalog[i].setQuantity(quantity);
-
-			count++;
-			if (inputFile.eof())
-			{
-				done++;
-			}
-		}
+			done++;
+		}*/
 	}
 	inputFile.close();
 

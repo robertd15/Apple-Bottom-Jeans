@@ -14,6 +14,7 @@ protected:
 	std::string releaseDate;
 	double price;
 	int quantity;
+	macBook* nextMac;
 
 public:
 
@@ -32,6 +33,7 @@ public:
 	void setReleaseDate(std::string);
 	void setPrice(double);
 	void setQuantity(int);
+	void setNext(macBook*);
 
 	//Getters
 	std::string getOrderNum() const;
@@ -39,7 +41,18 @@ public:
 	std::string getReleaseDate() const;
 	double getPrice() const;
 	int getQuantity() const;
+	macBook* getNext() const;
 
+	//Overloaded comparison operators
+	bool operator < (const macBook &);
+	bool operator > (const macBook &);
+
+	bool operator <= (const macBook &);
+	bool operator >= (const macBook &);
+
+	//Overloaded equality operators
+	bool operator == (const macBook &);
+	bool operator != (const macBook &);
 
 	//Overloaded input/output operators feel free to change these
 	friend std::ostream &operator << (std::ostream &, const macBook &);
