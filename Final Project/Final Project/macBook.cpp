@@ -101,8 +101,11 @@ bool macBook::operator < (const macBook &right)
 {
 	bool lessthan;
 
-	if (orderNum < right.orderNum || name < right.name || releaseDate < right.releaseDate || price < right.price || quantity < right.quantity)
+	if (orderNum < right.orderNum)
 		lessthan = true;
+
+	//else if (orderNum < right.orderNum || name < right.name || releaseDate < right.releaseDate || price < right.price || quantity < right.quantity)
+		//lessthan = true;
 	else
 		lessthan = false;
 	return lessthan;
@@ -112,8 +115,11 @@ bool macBook::operator > (const macBook &right)
 {
 	bool greaterthan;
 
-	if (orderNum > right.orderNum || name > right.name || releaseDate > right.releaseDate || price > right.price || quantity > right.quantity)
+	if (orderNum > right.orderNum)
 		greaterthan = true;
+
+	//else if (orderNum > right.orderNum || name > right.name || releaseDate > right.releaseDate || price > right.price || quantity > right.quantity)
+		//greaterthan = true;
 	else
 		greaterthan = false;
 
@@ -147,7 +153,9 @@ bool macBook::operator >= (const macBook &right)
 //Overloaded equality operators
 bool macBook::operator == (const macBook &right)
 {
-	if (orderNum == right.orderNum && name == right.name && releaseDate == right.releaseDate && price == right.price)
+	if (orderNum == right.orderNum)
+		return true;
+	else if (orderNum == right.orderNum && name == right.name && releaseDate == right.releaseDate && price == right.price)
 		return true;
 	else
 		return false;

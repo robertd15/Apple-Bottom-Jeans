@@ -118,6 +118,7 @@
     <ClInclude Include="HashMap.h" />
     <ClInclude Include="macBook.h" />
     <ClInclude Include="macHash.h" />
+    <ClInclude Include="ShoppingCartQueue.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="fileIO.cpp" />

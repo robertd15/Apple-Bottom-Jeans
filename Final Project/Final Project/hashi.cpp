@@ -108,7 +108,7 @@ bool hashi::confirmUser(std::string username, std::string password) {
 		return false;
 	}
 	// Case 2 - Match
-	else {
+	else if(findPtr != NULL && (findPtr->username == username && findPtr->password == password)){
 		std::cout << "Welcome, " << username << "!\n";
 		return true;
 	}

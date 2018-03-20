@@ -166,10 +166,15 @@ void macHash::printTable()
 		number = numberOfMacsInIndex(i);
 		std::cout << "-----------------------\n";
 		std::cout << "index = " << i << std::endl;
-		std::cout << *macTable[i] << std::endl;
-		std::cout << *macTable[i] << std::endl;
-		std::cout << "# of users = " << number << std::endl;
-		std::cout << "-----------------------\n";
+
+		if (number > 1)
+			printMacsInIndex(i);
+		else
+		{
+			std::cout << *macTable[i] << std::endl;
+			std::cout << "# of macs = " << number << std::endl;
+			std::cout << "-----------------------\n";
+		}
 	}
 }
 
@@ -179,7 +184,7 @@ Prints each user of specified bucket:
 - Username
 - Password
 */
-void macHash::printUsersInIndex(int index)
+void macHash::printMacsInIndex(int index)
 {
 	macBook* macPtr = macTable[index];
 
@@ -200,7 +205,7 @@ void macHash::printUsersInIndex(int index)
 }
 
 /*
-Remove particular username and password
+Remove particular mac
 */
 void macHash::removeMac(macBook removeMac)
 {
@@ -223,8 +228,9 @@ void macHash::removeMac(macBook removeMac)
 		//macTable[index]->setReleaseDate("");
 		//macTable[index]->setPrice(0.0);
 		//macTable[index]->setQuantity(0);
-		std::cout << *macTable[index] << " was removed\n";
+		//std::cout << *macTable[index] << " was removed\n";
 		delete delMacPtr;
+		return;
 	}
 
 	// Case 2 - match is located in the first user in the bucket but there are more items
@@ -233,8 +239,9 @@ void macHash::removeMac(macBook removeMac)
 		delMacPtr = macTable[index];
 		macTable[index] = macTable[index]->getNext();
 		delete delMacPtr;
+		return;
 
-		std::cout << *macTable[index] << " was removed\n";
+		//std::cout << *macTable[index] << " was removed\n";
 	}
 
 	//Case 3 - bucket contains items but first user is not a match

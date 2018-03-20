@@ -17,6 +17,7 @@
 //#include "HashMap.h"
 #include "fileIO.h"
 #include "macBook.h"
+#include "ShoppingCartQueue.h"
 
 
 using namespace std;
@@ -31,12 +32,15 @@ void showMenu();
 void shoppingMenu();
 macBook menuAdd();
 macBook menuRemove();
-void searchByNumber();
+macBook searchByOrderNumber();
+void printHashSequence(macHash &);
+void printBSTSequence(BST<macBook> &);
+void printIndentSequence(BST<macBook> &);
 macBook tempObjectCreate();
 
 //Login function prototypes
-void showOpeningScreen(hashi hashy);
-void showLoginScreen(hashi hashy);
+bool showOpeningScreen(hashi hashy);
+bool showLoginScreen(hashi hashy);
 void showCreateAccountScreen(hashi hashy);
 void showForgotPasswordScreen(hashi hashy);
 void showAdminScreen(hashi hashy);
@@ -44,18 +48,28 @@ void showAdminScreen(hashi hashy);
 
 int main()
 {
-
-
+	//Login hash table prevents anyone not in the login from accessing the program
 	hashi hashy;
 
-	showOpeningScreen(hashy);
+	bool unlock = showOpeningScreen(hashy);
 
+	while (!unlock)
+	{
+		cout << "Incorrect Login Credentials entered" << endl << endl;
+		cout << "Please try again" << endl << endl;
+
+		unlock = showOpeningScreen(hashy);
+	}
+
+	//Initialize MacBook object array to use for initialization of other data structures
 	macBook catalog[MAX_ENTRY_SIZE];
 	fileIO file;
 	file.readFile(catalog);
 
 	//Create BST and Hash Table
 	BST<macBook> macTree;
+
+	//Hash Table is automatically initialized
 	macHash macTable;
 
 	//Initialize BST contents
@@ -63,7 +77,6 @@ int main()
 	{
 		macTree.addByOrder(catalog[i]);
 	}
-
 
 
 	int choice = -1;
@@ -83,34 +96,65 @@ int main()
 		{
 		case 1:
 			tempValue = menuAdd();
+
 			macTree.add(tempValue);
 			macTable.addMac(tempValue);
+
+			enterToContinue("return to the main menu");
 			break;
 		case 2:
 			tempValue = menuRemove();
+
 			macTree.deleteData(tempValue);
 			macTable.removeMac(tempValue);
+
+			enterToContinue("return to the main menu");
 			break;
 
 		case 3:
-			searchByNumber();
+			int pos;
 
+			tempValue = searchByOrderNumber();
+			
+			pos = macTree.whereIs(tempValue);
+
+			if (pos <= 0)
+				cout << "Entry was not found!" << endl << endl;
+
+			if (pos > 0)
+			{
+				macTree.printAt(pos);
+			}
+
+			enterToContinue("return to the main menu");
 			break;
 
 		case 4:
-			cout << "4\n";
+			cout << "Hash Sequence Print:" << endl << endl;
+
+			printHashSequence(macTable);
+
 			enterToContinue("return to the main menu");
 			break;
 		case 5:
-			cout << "5\n";
+			cout << "Sorted Data Print(BST):" << endl << endl;
+
+			printBSTSequence(macTree);
+
 			enterToContinue("return to the main menu");
 			break;
 		case 6:
-			cout << "6\n";
+			cout << "Print Indented Sequence" << endl << endl;
+
+			printIndentSequence(macTree);
+
 			enterToContinue("return to the main menu");
 			break;
 		case 7:
-			cout << "7\n";
+			cout << "Print Data Efficiency:" << endl << endl;
+
+
+
 			enterToContinue("return to the main menu");
 			break;
 		case 8:
@@ -143,7 +187,7 @@ void showMenu()
 	cout << "\n\n\t\t   [1]. Add Record  " << endl;
 	cout << "\n\t\t   [2]. Delete Record  " << endl;
 	cout << "\n\t\t   [3]. Search By Order Number " << endl;
-	cout << "\n\t\t   [4]. Print Data " << endl;
+	cout << "\n\t\t   [4]. Print Data in Hash Sequence" << endl;
 	cout << "\n\t\t   [5]. Print Data (sorted by order number) " << endl;
 	cout << "\n\t\t   [6]. Print Indented Tree " << endl;
 	cout << "\n\t\t   [7]. Print Efficiency of Data " << endl;
@@ -171,7 +215,10 @@ void shoppingMenu() {
 
 		switch (subChoice) {
 		case 1:
-			cout << "Place your oder";
+			cout << "Place your order:" << endl << endl;
+
+
+
 			enterToContinue("return to the shopping cart");
 			break;
 		case 2:
@@ -233,12 +280,42 @@ macBook menuRemove()
 
 }
 
-void searchByNumber()
+macBook searchByOrderNumber()
 {
 	system("CLS");
-	cout << "search function";
+	cout << "Search function:" << endl << endl;
+
+	macBook searchMac;
+	string tempOrderNum;
+
+	cout << "Please enter the order number of the Mac you are searching for:" << endl << endl;
+
+	getline(cin, tempOrderNum);
+	cout << endl << endl;
+
+	searchMac.setOrderNum(tempOrderNum);
+
+	return searchMac;
+
 	enterToContinue("return to main menu");
 
+}
+
+void printHashSequence(macHash &macTable)
+{
+	system("CLS");
+
+	macTable.printTable();
+}
+
+void printBSTSequence(BST<macBook> &macTree)
+{
+	macTree.print();
+}
+
+void printIndentSequence(BST<macBook> &macTree)
+{
+	macTree.printIndented();
 }
 
 //Creates a temporary mac object to pass to an add function
@@ -273,6 +350,7 @@ macBook tempObjectCreate()
 	cin.ignore();
 	cout << endl;
 
+	cout << "Added/Removed Entry Contents:" << endl << endl;
 	macBook tempMac(tempOrderNum, tempName, tempRelease, tempPrice, tempQuantity);
 
 	return tempMac;
@@ -283,7 +361,7 @@ macBook tempObjectCreate()
 Displays opening screen
 Select user choice of menu options
 */
-void showOpeningScreen(hashi hashy) {
+bool showOpeningScreen(hashi hashy) {
 	char choice = ' ';
 	bool lock = true;
 
@@ -298,7 +376,7 @@ void showOpeningScreen(hashi hashy) {
 
 	switch (choice) {
 	case '1': system("cls");
-		showLoginScreen(hashy);
+		lock = showLoginScreen(hashy);
 		break;
 	case '2': system("cls");
 		showCreateAccountScreen(hashy);
@@ -307,7 +385,7 @@ void showOpeningScreen(hashi hashy) {
 		showForgotPasswordScreen(hashy);
 		break;
 	case '4': cout << "\nGoodbye!\n" << endl;
-		system("exit");
+		exit(0);
 		break;
 	case '5': system("cls");
 		showAdminScreen(hashy);
@@ -315,6 +393,8 @@ void showOpeningScreen(hashi hashy) {
 	default:  system("cls");
 		showOpeningScreen(hashy);
 	}
+
+	return lock;
 }
 
 /*
@@ -323,8 +403,9 @@ Requests user to input their username-password
 If successful, enter the database
 If unsuccessful, return to opening screen
 */
-void showLoginScreen(hashi hashy) {
+bool showLoginScreen(hashi hashy) {
 	string username, password;
+	bool confirmUser = false;
 
 	cout << "\t\t   ****** Login ****** \n";
 	cout << "\n\n\t\tUsername: ";
@@ -334,10 +415,13 @@ void showLoginScreen(hashi hashy) {
 	cout << "\n\t\t";
 	if (hashy.confirmUser(username, password) == true) {
 		cout << "\n\t\tPassed" << endl;
+		confirmUser = true;
+
 	}
 
 	system("pause");
 	system("cls");
+	return confirmUser;
 }
 
 void showCreateAccountScreen(hashi hashy) {

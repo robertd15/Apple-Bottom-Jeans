@@ -647,8 +647,6 @@ public:
 				}
 			}
 			delete curr;
-			curr = nullptr;
-			start = nullptr;
 		}
 	}
 

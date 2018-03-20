@@ -28,9 +28,9 @@ public:
 	int numberOfMacsInIndex(int index);
 
 	void printTable();
-	void printUsersInIndex(int index);
+	void printMacsInIndex(int index);
 
-	void findPassword(std::string username);
+	//void findPassword(std::string username);
 
 	void removeMac(macBook);
 	void removeFromTextFile(macBook);
