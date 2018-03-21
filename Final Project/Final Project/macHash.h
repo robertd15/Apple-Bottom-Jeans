@@ -19,7 +19,7 @@ public:
 
 	void loadDatabase();
 
-	bool hasDuplicate(std::string username);
+	bool hasDuplicate(std::string);
 
 	void addMac(macBook);
 	void addToTextFile(macBook);
@@ -29,6 +29,10 @@ public:
 
 	void printTable();
 	void printMacsInIndex(int index);
+	int numOfFilledEntries();
+	int longestBucket();
+	int numOfCollisions();
+	int numOfCollisionsAt(int);
 
 	//void findPassword(std::string username);
 

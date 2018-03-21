@@ -161,9 +161,8 @@ int macHash::numberOfMacsInIndex(int index)
 /*
 Prints a layout of the hash table:
 - Index
-- Username of top bucket
-- Password of top bucket
-- # of users in bucket
+-Mac of top bucket
+- # of macs in bucket
 */
 void macHash::printTable()
 {
@@ -186,10 +185,9 @@ void macHash::printTable()
 }
 
 /*
-Prints each user of specified bucket:
+Prints each mac of specified bucket:
 - Index of Bucket
-- Username
-- Password
+- Mac
 */
 void macHash::printMacsInIndex(int index)
 {
@@ -209,6 +207,58 @@ void macHash::printMacsInIndex(int index)
 
 		}
 	}
+}
+
+//Calculates number of entries that are filled in the hash table
+int macHash::numOfFilledEntries()
+{
+	int filledEntries = 0;
+	macBook compareNullObj;
+	for (int i = 0; i < TABLE_SIZE; i++)
+	{
+		if (*macTable[i] != compareNullObj)
+			filledEntries++;
+	}
+	return filledEntries;
+}
+
+//Calculates longest bucket in the table
+int macHash::longestBucket()
+{
+	int bucketIndex = -1;
+	int mostCol = numOfCollisionsAt(0);
+
+	for (int i = 1; i < TABLE_SIZE; i++)
+	{
+
+		if (mostCol < numOfCollisionsAt(i))
+		{
+			mostCol = numOfCollisionsAt(i);
+			bucketIndex = i;
+		}
+	}
+	return bucketIndex;
+}
+
+//Calculates total number of collisions in the entire table
+int macHash::numOfCollisions()
+{
+	int collisions = 0;
+	for (int i = 0; i < TABLE_SIZE; i++)
+	{
+		if (macTable[i]->getNext() != nullptr)
+			collisions++;
+	}
+	return collisions;
+}
+
+//Calculates number of collisions at a specified index
+int macHash::numOfCollisionsAt(int arrIndex)
+{
+	int collisions = 0;
+	if (macTable[arrIndex]->getNext() != nullptr)
+		collisions++;
+	return collisions;
 }
 
 /*

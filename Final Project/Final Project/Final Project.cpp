@@ -36,6 +36,7 @@ void searchByOrderNumber(BST<macBook> &);
 void printHashSequence(macHash &);
 void printBSTSequence(BST<macBook> &);
 void printIndentSequence(BST<macBook> &);
+void printEfficiency(macHash &);
 macBook tempObjectCreate();
 
 //Login function prototypes
@@ -137,7 +138,7 @@ int main()
 		case 7:
 			cout << "Print Data Efficiency:" << endl << endl;
 
-
+			printEfficiency(macTable);
 
 			enterToContinue("return to the main menu");
 			break;
@@ -246,10 +247,21 @@ void menuAdd(BST<macBook> &macTree, macHash &macTable)
 	macBook addMac;
 	addMac = tempObjectCreate();
 
+	if (macTable.hasDuplicate(addMac.getOrderNum()))
+	{
+		char duplicate = 'N';
+		cout << "This mac is already in the inventory" << endl << endl;
+		cout << "Would you like to increase the quantity in inventory?:" << endl << endl;
+		cin >> duplicate;
+		cin.ignore();
+
+		if (duplicate == 'Y' || duplicate == 'y')
+		{
+			int foundIndex = macTree.whereIs(addMac);
+			macTree.
+
 	macTree.add(addMac);
 	macTable.addMac(addMac);
-
-	enterToContinue("return to main menu");
 }
 
 void menuRemove(BST<macBook> &macTree, macHash &macTable)
@@ -261,8 +273,6 @@ void menuRemove(BST<macBook> &macTree, macHash &macTable)
 
 	macTree.deleteData(removeMac);
 	macTable.removeMac(removeMac);
-	
-	enterToContinue("return to main menu");
 
 }
 
@@ -292,8 +302,6 @@ void searchByOrderNumber(BST<macBook> &macTree)
 		macTree.printAt(pos);
 	}
 
-	enterToContinue("return to main menu");
-
 }
 
 void printHashSequence(macHash &macTable)
@@ -311,6 +319,24 @@ void printBSTSequence(BST<macBook> &macTree)
 void printIndentSequence(BST<macBook> &macTree)
 {
 	macTree.printIndented();
+}
+
+void printEfficiency(macHash &macTable)
+{
+	system("CLS");
+
+	cout << "Load Factor:" << endl << endl;
+	cout << "There are " << macTable.numOfFilledEntries() << " out of " << MAX_ENTRY_SIZE << " array indices in the hash table filled with mac entries" << endl << endl;
+
+	cout << "Longest Bucket:" << endl << endl;
+	cout << "The longest bucket is located at array indice " << macTable.longestBucket() << " and contains " << macTable.numOfCollisionsAt(macTable.longestBucket()) << " collision/s" << endl << endl;
+	cout << "Here are the contents of that bucket:" << endl << endl;
+	macTable.printMacsInIndex(macTable.longestBucket());
+	cout << endl << endl;
+
+	cout << "Number of Collisions:" << endl << endl;
+	cout << "There are " << macTable.numOfCollisions() << " total collisions in the hash table out of " << MAX_ENTRY_SIZE << " total array indices" << endl << endl;
+
 }
 
 //Creates a temporary mac object to pass to an add function

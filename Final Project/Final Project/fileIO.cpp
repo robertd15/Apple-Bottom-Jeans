@@ -79,7 +79,7 @@ int fileIO::readFile(macBook catalog[])	//opens file of apple data and inserts i
 
 void fileIO::writeFile(macBook catalog[], int size)
 {
-	//if you dont want initial book inventory rewritten
+	//if you dont want initial mac inventory rewritten
 	outputFile.open("output.txt");
 
 	//rewrites initial text file
