@@ -30,9 +30,9 @@ const int MAX_ENTRY_SIZE = 30;
 void enterToContinue(string);
 void showMenu();
 void shoppingMenu();
-macBook menuAdd();
-macBook menuRemove();
-macBook searchByOrderNumber();
+void menuAdd(BST<macBook> &, macHash &);
+void menuRemove(BST<macBook> &, macHash &);
+void searchByOrderNumber(BST<macBook> &);
 void printHashSequence(macHash &);
 void printBSTSequence(BST<macBook> &);
 void printIndentSequence(BST<macBook> &);
@@ -78,6 +78,7 @@ int main()
 		macTree.addByOrder(catalog[i]);
 	}
 
+	int pos = -1;
 
 	int choice = -1;
 
@@ -95,36 +96,19 @@ int main()
 		switch (choice)
 		{
 		case 1:
-			tempValue = menuAdd();
-
-			macTree.add(tempValue);
-			macTable.addMac(tempValue);
+			menuAdd(macTree, macTable);
 
 			enterToContinue("return to the main menu");
 			break;
 		case 2:
-			tempValue = menuRemove();
-
-			macTree.deleteData(tempValue);
-			macTable.removeMac(tempValue);
+			menuRemove(macTree, macTable);
 
 			enterToContinue("return to the main menu");
 			break;
 
 		case 3:
-			int pos;
 
-			tempValue = searchByOrderNumber();
-			
-			pos = macTree.whereIs(tempValue);
-
-			if (pos <= 0)
-				cout << "Entry was not found!" << endl << endl;
-
-			if (pos > 0)
-			{
-				macTree.printAt(pos);
-			}
+			searchByOrderNumber(macTree);
 
 			enterToContinue("return to the main menu");
 			break;
@@ -219,6 +203,7 @@ void shoppingMenu() {
 
 
 
+
 			enterToContinue("return to the shopping cart");
 			break;
 		case 2:
@@ -253,7 +238,7 @@ void enterToContinue(string string)
 
 
 
-macBook menuAdd()
+void menuAdd(BST<macBook> &macTree, macHash &macTable)
 {
 	system("CLS");
 	cout << "Add function:" << endl << endl;
@@ -261,27 +246,29 @@ macBook menuAdd()
 	macBook addMac;
 	addMac = tempObjectCreate();
 
-	return addMac;
+	macTree.add(addMac);
+	macTable.addMac(addMac);
 
 	enterToContinue("return to main menu");
 }
 
-macBook menuRemove()
+void menuRemove(BST<macBook> &macTree, macHash &macTable)
 {
 	system("CLS");
 	cout << "Remove Function:" << endl << endl;
 
-	macBook removeMac;
-	removeMac = tempObjectCreate();
+	macBook removeMac = tempObjectCreate();
 
-	return removeMac;
+	macTree.deleteData(removeMac);
+	macTable.removeMac(removeMac);
 	
 	enterToContinue("return to main menu");
 
 }
 
-macBook searchByOrderNumber()
+void searchByOrderNumber(BST<macBook> &macTree)
 {
+	int pos = -1;
 	system("CLS");
 	cout << "Search function:" << endl << endl;
 
@@ -295,7 +282,15 @@ macBook searchByOrderNumber()
 
 	searchMac.setOrderNum(tempOrderNum);
 
-	return searchMac;
+	pos = macTree.whereIs(searchMac);
+
+	if (pos <= 0)
+		cout << "Entry was not found!" << endl << endl;
+
+	else if (pos > 0)
+	{
+		macTree.printAt(pos);
+	}
 
 	enterToContinue("return to main menu");
 

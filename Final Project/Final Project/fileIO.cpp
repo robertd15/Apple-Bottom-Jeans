@@ -54,9 +54,9 @@ int fileIO::readFile(macBook catalog[])	//opens file of apple data and inserts i
 
 		count++;
 
-	/*	if (inputFile.eof())
+		/*	if (inputFile.eof())
 		{
-			done++;
+		done++;
 		}*/
 	}
 	inputFile.close();
@@ -80,10 +80,10 @@ int fileIO::readFile(macBook catalog[])	//opens file of apple data and inserts i
 void fileIO::writeFile(macBook catalog[], int size)
 {
 	//if you dont want initial book inventory rewritten
-	//outputFile.open("output.txt");
+	outputFile.open("output.txt");
 
 	//rewrites initial text file
-	outputFile.open(inPath + inFile);
+	//outputFile.open(inPath + inFile);
 
 	//writes inventory into file
 	for (int i = 0; i < size; i++)
@@ -101,4 +101,85 @@ void fileIO::writeFile(macBook catalog[], int size)
 	}
 
 	outputFile.close();
+}
+
+
+int fileIO::addMacBook(macBook catalog[], int size, macBook add)
+{
+	//initializes check
+	check = false;
+
+	//counts for the array of macbooks
+	for (int i = 0; i < size; i++)
+	{
+		//if order number already exist, adds quantity to existing macbook
+		if ((add.orderNum == catalog[i].orderNum) && (check == false))
+		{
+			std::cout << "Adding quantity to existing book. Previous quantity:\n";
+			std::cout << "Order Number: " << catalog[i].orderNum << std::endl;
+			std::cout << "Name: " << catalog[i].name << std::endl;
+			std::cout << "Quantity: " << catalog[i].quantity << std::endl;
+			catalog[i].quantity += quantity;
+			std::cout << "Updated quantity:\n";
+			std::cout << "Order Number: " << catalog[i].orderNum << std::endl;
+			std::cout << "Name: " << catalog[i].name << std::endl;
+			std::cout << "Quantity: " << catalog[i].quantity << std::endl << std::endl;
+			return size;
+		}
+
+		else if (check == true)
+		{
+			//prevents the other options, couldnt think of a better way logically, for loops are weird
+		}
+		//if no similar macbook exists, creates new macbook at the end of the array
+		else if (i == size - 1)
+		{
+			catalog[size].setOrderNum(add.orderNum);
+			catalog[size].setName(add.name);
+			catalog[size].setReleaseDate(add.releaseDate);
+			catalog[size].setPrice(add.price);
+			catalog[size].setQuantity(add.quantity);
+
+			size++;
+			check = true; // lets loop continue without repeating this option
+		}
+	}
+
+	return size;
+}
+
+int fileIO::deleteMacBook(macBook catalog[], int size, macBook del)
+{
+	check = false;
+
+	//checks and deletes entry if matching order number
+	for (int i = 0; i < size; i++)
+	{
+		if ((del.orderNum == catalog[i].orderNum))
+		{
+			std::cout << "Deleting\n";
+			std::cout << "Order Number: " << catalog[i].orderNum << std::endl;
+			std::cout << "Name: " << catalog[i].name << std::endl;
+			std::cout << "Release Date: " << catalog[i].releaseDate << std::endl;
+			std::cout << "Price: " << catalog[i].price << std::endl;
+			std::cout << "Quantity: " << catalog[i].quantity << std::endl;
+
+			for (int j = i; j < size; j++)//readjusts array from deleted entry position
+			{
+				catalog[j] = catalog[j + 1];
+			}
+
+			size--;
+
+			check = true;
+		}
+
+	}
+
+	if (check == false)
+	{
+		std::cout << "No such entry" << del << std::endl;
+	}
+
+	return size;
 }

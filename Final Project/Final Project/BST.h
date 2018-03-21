@@ -326,7 +326,8 @@ public:
 		if (pos <= num) {
 			return findInorder(node, &at, pos);
 		}
-		return NULL;
+		else
+			return data;
 	}
 	T findInorder(BSTNode<T>* node, int* at, int pos) {
 		T data = NULL;

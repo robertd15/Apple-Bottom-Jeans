@@ -37,7 +37,7 @@ void macHash::addMac(macBook newMac)
 	int index = Hash(newMac.getOrderNum());
 
 	// If bucket is empty = Add it to initial bucket
-	if (macTable[index]->getOrderNum() == "") {
+	if (macTable[index] != NULL && macTable[index]->getOrderNum() == "") {
 		macTable[index]->setOrderNum(newMac.getOrderNum());
 		macTable[index]->setName(newMac.getName());
 		macTable[index]->setReleaseDate(newMac.getReleaseDate());
@@ -55,10 +55,17 @@ void macHash::addMac(macBook newMac)
 		n->setNext(NULL);
 
 		// Traverse to end of bucket
-		while (macPtr->getNext() != NULL)
-			macPtr = macPtr->getNext();
+		if (macPtr != NULL)
+		{
+			while (macPtr->getNext() != NULL)
+				macPtr = macPtr->getNext();
 
-		macPtr->setNext(n);	// Add temp to the next pointer of the last node
+			macPtr->setNext(n);	// Add temp to the next pointer of the last node
+		}
+		else
+		{
+			macTable[index] = n;
+		}
 	}
 }
 
@@ -223,13 +230,12 @@ void macHash::removeMac(macBook removeMac)
 	// Case 1 - only 1 user contained in bucket and that user has matching name
 	else if (macTable[index]->getOrderNum() == removeMac.getOrderNum() && macTable[index]->getNext() == NULL) {
 		delMacPtr = macTable[index];
-		//macTable[index]->setOrderNum("");
-		//macTable[index]->setName("");
-		//macTable[index]->setReleaseDate("");
-		//macTable[index]->setPrice(0.0);
-		//macTable[index]->setQuantity(0);
+		macTable[index]->setOrderNum("");
+		macTable[index]->setName("");
+		macTable[index]->setReleaseDate("");
+		macTable[index]->setPrice(0.0);
+		macTable[index]->setQuantity(0);
 		//std::cout << *macTable[index] << " was removed\n";
-		delete delMacPtr;
 		return;
 	}
 

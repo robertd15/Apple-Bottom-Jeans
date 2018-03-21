@@ -1,7 +1,9 @@
-﻿  Final Project.cpp
+﻿  fileIO.cpp
+\\puma\home\robertd15\visual studio 2017\projects\final project\final project\fileio.cpp(130): warning C4805: '==': unsafe mix of type 'int' and type 'bool' in operation
   Generating Code...
   Compiling...
-  fileIO.cpp
+  macHash.cpp
+  Final Project.cpp
   Generating Code...
   Final Project.vcxproj -> \\puma\home\robertd15\Visual Studio 2017\Projects\Final Project\Debug\Final Project.exe
   Final Project.vcxproj -> \\puma\home\robertd15\Visual Studio 2017\Projects\Final Project\Debug\Final Project.pdb (Partial PDB)

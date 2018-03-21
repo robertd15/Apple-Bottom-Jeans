@@ -10,3 +10,4 @@ admin	password
 deanza	cupertino
 Manish	Goel
 guest	guest
+student	school
